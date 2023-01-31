@@ -521,10 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7660a89dca76384e866bbed49250c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraShed: {fileID: 1847412733}
-  CameraFences: {fileID: 2087098286}
-  CameraBridge: {fileID: 1843038900}
-  CameraTools: {fileID: 936085684}
+  VirtualCamera: {fileID: 0}
 --- !u!1001 &249827387
 PrefabInstance:
   m_ObjectHideFlags: 0

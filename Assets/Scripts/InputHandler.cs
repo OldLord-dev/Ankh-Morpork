@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
     public class InputHandler : MonoBehaviour
     {
         public Vector2 move,look;
-        public bool jump,sprint,pickUp,mining,eqSlot1, eqSlot2, eqSlot3;
+        public bool jump,sprint,pickUp,mining,eqSlot1, eqSlot2, eqSlot3,attack;
         public float zoom;
         private bool cursorLocked = true;
         private bool cursorInputForLook = true;
@@ -43,6 +43,10 @@ using UnityEngine.InputSystem;
 		{
             MiningInput(value.isPressed);
 		}
+        public void OnAttack(InputValue value)
+    {
+            AttackInput(value.isPressed);
+    }
         public void OnEqSlot1(InputValue value)
         {
             EqSlot1(value.isPressed);
@@ -95,7 +99,10 @@ using UnityEngine.InputSystem;
     {
         eqSlot3 = newEqSlot;
     }
-
+    public void AttackInput(bool newAttack)
+    {
+        attack= newAttack;
+    }
     private void OnApplicationFocus(bool hasFocus)
         {
             SetCursorState(cursorLocked);

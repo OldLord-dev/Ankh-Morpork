@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private LayerMask GroundLayers;
-    private AnimationCommand jump,pickUp,mining,attacking;
+    private AnimationCommand jump,pickUp,attacking;
     private AnimationMovement movement;
    // bool performingAnimation=false;
     private Rigidbody rb;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         jump = new Jump();
         pickUp = new PickUp();
         movement = new BlendMove();
-        mining = new Mining();
+      // mining = new Mining();
         attacking = new Attacking();
     }
     void Awake()
@@ -107,8 +107,6 @@ public class PlayerController : MonoBehaviour
     {
         targetSpeed = inputHandler.sprint ? sprint : speed;
         Vector3 inputDirection = new Vector3(inputHandler.move.x, 0.0f, inputHandler.move.y).normalized;
-        anim.SetFloat("InputX", inputHandler.move.x);
-        anim.SetFloat("InputY", inputHandler.move.y);
         if (inputHandler.move != Vector2.zero && !anim.GetBool("PickUp"))
         {
             targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
@@ -166,6 +164,12 @@ public class PlayerController : MonoBehaviour
         //  
         //if(eqTool.GetEqSlot>0)
         //eqTool = inputHandler.eqSlot;
+        if(inputHandler.mining)
+        {
+            anim.SetBool("Attack",inputHandler.mining);
+        }else
+            anim.SetBool("Attack", inputHandler.mining);
+
         if (inputHandler.mining || inputHandler.eqSlot1|| inputHandler.eqSlot2|| inputHandler.eqSlot3)
             switch (eqSlot)
         {
@@ -173,7 +177,7 @@ public class PlayerController : MonoBehaviour
                 pick.SetActive(true);
                 axe.SetActive(false);
                 anim.SetBool("EquippedTool", true);
-                    mining.Execute(anim, inputHandler.mining);
+                  //  mining.Execute(anim, inputHandler.mining);
                 break;
             case 2:
                 pick.SetActive(false);
@@ -191,7 +195,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            mining.Execute(anim, inputHandler.mining);
+            //mining.Execute(anim, inputHandler.mining);
             attacking.Execute(anim, inputHandler.mining);
         }
 

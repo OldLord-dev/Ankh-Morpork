@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Ground
   - PlayerCameraRoot
+  - Guts
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

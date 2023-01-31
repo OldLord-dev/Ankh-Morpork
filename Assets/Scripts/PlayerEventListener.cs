@@ -5,32 +5,43 @@ using UnityEngine;
 public class PlayerEventListener : MonoBehaviour
 {
     Animator anim;
-
-    [SerializeField]
-    private BoxCollider boxCollider;
-    [SerializeField]
-    private BoxCollider axeCollider;
-    [SerializeField]
-    private Transform leftHandTransform;
+    public bool AttackInProgress { get; private set; } = false;
+    //[SerializeField]
+    //private BoxCollider boxCollider;
+    //[SerializeField]
+    //private BoxCollider axeCollider;
+    //[SerializeField]
+    //private Transform leftHandTransform;
     Collider coll;
     void Start()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void OnGrabAnimation()
-    {
-        coll.gameObject.transform.position = leftHandTransform.position;
-        coll.gameObject.transform.position= coll.ClosestPoint(coll.gameObject.transform.position)-Vector3.up*0.1f;
-        coll.gameObject.transform.SetParent(leftHandTransform, true);
+    //public void OnGrabAnimation()
+    //{
+    //    coll.gameObject.transform.position = leftHandTransform.position;
+    //    coll.gameObject.transform.position= coll.ClosestPoint(coll.gameObject.transform.position)-Vector3.up*0.1f;
+    //    coll.gameObject.transform.SetParent(leftHandTransform, true);
 
-    }
+    //}
     public void AnimationDone()
     {
-        anim.SetBool("PickUp", false);
-        anim.SetBool("CanPickUp", false);
-        coll.gameObject.transform.parent.DetachChildren();
-        coll.gameObject.SetActive(false);   
+       // anim.SetBool("PickUp", false);
+       // anim.SetBool("CanPickUp", false);
+        //coll.gameObject.transform.parent.DetachChildren();
+       // coll.gameObject.SetActive(false);   
+    }
+    private void SetAttackStart()
+    {
+        // Attacking
+        //AttackInProgress = true;
+        anim.SetBool("Attacking", true);
+    }
+
+    private void SetAttackEnd()
+    {
+        anim.SetBool("Attacking", false);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -50,12 +61,12 @@ public class PlayerEventListener : MonoBehaviour
 
     public void TurnOnCollider()
     {
-        boxCollider.enabled = true;
-        axeCollider.enabled = true;
+        //boxCollider.enabled = true;
+        //axeCollider.enabled = true;
     }
     public void OnAnimationEnd()
     {
-        boxCollider.enabled = false;
-        axeCollider.enabled = false;
+        //boxCollider.enabled = false;
+       // axeCollider.enabled = false;
     }
 }
