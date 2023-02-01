@@ -6,8 +6,8 @@ public class PlayerEventListener : MonoBehaviour
 {
     Animator anim;
     public bool AttackInProgress { get; private set; } = false;
-    //[SerializeField]
-    //private BoxCollider boxCollider;
+    [SerializeField]
+    private BoxCollider boxCollider;
     //[SerializeField]
     //private BoxCollider axeCollider;
     //[SerializeField]
@@ -36,11 +36,13 @@ public class PlayerEventListener : MonoBehaviour
     {
         // Attacking
         //AttackInProgress = true;
+        boxCollider.enabled = true;
         anim.SetBool("Attacking", true);
     }
 
     private void SetAttackEnd()
     {
+        boxCollider.enabled = false;
         anim.SetBool("Attacking", false);
     }
     private void OnTriggerEnter(Collider other)
@@ -61,12 +63,12 @@ public class PlayerEventListener : MonoBehaviour
 
     public void TurnOnCollider()
     {
-        //boxCollider.enabled = true;
+        boxCollider.enabled = true;
         //axeCollider.enabled = true;
     }
     public void OnAnimationEnd()
     {
-        //boxCollider.enabled = false;
+        boxCollider.enabled = false;
        // axeCollider.enabled = false;
     }
 }

@@ -24,8 +24,8 @@ public class State
     protected NavMeshAgent agent;
 
     float visDist = 10.0f;
-    float visAngle = 30.0f;
-    float shootDist = 7.0f;
+    float visAngle = 360.0f;
+    float shootDist = 1.1f;
 
     public State(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player)
     {
@@ -97,7 +97,7 @@ public class Idle : State
             nextState = new Pursue(npc, agent, anim, player);
             stage = EVENT.EXIT;
         }
-        else if (Random.Range(0, 100) < 10)
+        else if (Random.Range(0, 10000) < 10)
         {
             nextState = new Patrol(npc, agent, anim, player);
             stage = EVENT.EXIT;
@@ -174,7 +174,7 @@ public class Pursue: State
                 : base(_npc, _agent, _anim, _player)
     {
         name = STATE.PURSUE;
-        agent.speed = 5;
+        agent.speed = 2f;
         agent.isStopped = false;
     }
 
@@ -237,7 +237,6 @@ public class Attack : State
         npc.transform.rotation = Quaternion.Slerp(npc.transform.rotation,
                                             Quaternion.LookRotation(direction),
                                             Time.deltaTime * rotationSpeed);
-
         if (!CanAttackPlayer())
         {
             nextState = new Idle(npc, agent, anim, player);
@@ -252,3 +251,4 @@ public class Attack : State
         base.Exit();
     }
 }
+
