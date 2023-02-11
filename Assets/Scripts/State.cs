@@ -144,12 +144,19 @@ public class Patrol: State
     {
         if (agent.remainingDistance < 1)
         {
+            if (Random.Range(0, 10) < 6)
+            {
+                nextState = new Idle(npc, agent, anim, player);
+                stage = EVENT.EXIT;
+                // currentIndex = 0;
+            }
+            else { 
             if (currentIndex >= GameEnvironment.Singleton.Checkpoints.Count - 1)
                 currentIndex = 0;
             else
                 currentIndex++;
-
             agent.SetDestination(GameEnvironment.Singleton.Checkpoints[currentIndex].transform.position);
+            }
         }
 
         if (CanSeePlayer())
@@ -157,7 +164,6 @@ public class Patrol: State
             nextState = new Pursue(npc, agent, anim, player);
             stage = EVENT.EXIT;
         }
-
     }
 
     public override void Exit()

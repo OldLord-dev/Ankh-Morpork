@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water_mat_03
-  m_Shader: {fileID: -6465566751694194690, guid: dd97de70edf8a4141bee758a2efe7ff8,
+  m_Shader: {fileID: -6465566751694194690, guid: 676d377b0658f5a459785a610a827c3d,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -62,7 +62,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - Color_36218622185947c6a5ae36366d8e21d8: {r: 0.13739133, g: 0.3679245, b: 0,
+    - Color_36218622185947c6a5ae36366d8e21d8: {r: 0.4339623, g: 0.4331965, b: 0.17467661,
         a: 0.9607843}
     - Color_93e06cd551a5449091bcde90b46765a0: {r: 0.14375563, g: 0.23584908, b: 0,
         a: 0.19607843}
