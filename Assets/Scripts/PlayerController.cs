@@ -194,6 +194,7 @@ public class PlayerController : MonoBehaviour
                 pick.SetActive(false);
                 axe.SetActive(true);
                 anim.SetBool("EquippedTool", true);
+                    if(isIntroDone)
                     attacking.Execute(anim, inputHandler.mining);
                 break;
             case 0:
@@ -207,7 +208,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             //mining.Execute(anim, inputHandler.mining);
-            attacking.Execute(anim, inputHandler.mining);
+            if (isIntroDone)
+                attacking.Execute(anim, inputHandler.mining);
         }
 
     }
