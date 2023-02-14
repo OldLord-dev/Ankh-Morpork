@@ -9,6 +9,8 @@ TagManager:
   - Guts
   - Checkpoint
   - Sword
+  - Door
+  - Checkpoint2
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - Player
   - Water
   - UI
-  - 
+  - Door
   - 
   - 
   - 

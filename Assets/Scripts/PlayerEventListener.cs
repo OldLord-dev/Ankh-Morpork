@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerEventListener : MonoBehaviour
 {
     Animator anim;
+    Animator animColl;
     public bool AttackInProgress { get; private set; } = false;
     [SerializeField]
     private BoxCollider boxCollider;
@@ -47,17 +48,29 @@ public class PlayerEventListener : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 9)
+        if (other.gameObject.layer == 6)
         { 
             coll = other;
+            animColl = coll.gameObject.GetComponent<Animator>();
             anim.SetBool("CanPickUp", true);
         }
     }
+    bool state=false;
+    private void OnTriggerStay(Collider other)
+    {
+        if (coll != null && anim.GetBool("PickUp") && animColl.GetBool("AnimDone"))
+        {
+            state = !state;
+            animColl.SetBool("Open", state);
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == 9)
+        if (other.gameObject.layer == 6)
         {
                 anim.SetBool("CanPickUp", false);
+                coll = null;
         }
     }
 

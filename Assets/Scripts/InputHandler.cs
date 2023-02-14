@@ -103,12 +103,25 @@ using UnityEngine.InputSystem;
     {
         attack= newAttack;
     }
+    bool introDone=false;
     private void OnApplicationFocus(bool hasFocus)
         {
+        if (introDone)
             SetCursorState(cursorLocked);
         }
-        private void SetCursorState(bool newState)
+        public void SetCursorState(bool newState)
         {
             Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
         }
+    public GameObject introCutscene;
+    public void OnGameStart()
+    {
+        introDone = true;
+        SetCursorState(true);
+        introCutscene.SetActive(true);
     }
+    public void OnGameQuit()
+    {
+        Application.Quit();
+    }
+}

@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     [Range(0.0f, 0.3f)]
     public float RotationSmoothTime = 0.12f;
     //Vector2 move;
-
+    bool isIntroDone = false;
     private Animator anim;
    // private bool canPickUp = false;
 
@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
 
         CinemachineCameraTarget = GameObject.FindGameObjectWithTag("PlayerCameraRoot");
+        componentBase = VirtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
 
         rb = player.GetComponent<Rigidbody>();
         inputHandler = GetComponent<InputHandler>();
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         GroundedCheck();
-       // CameraZoom();
+        CameraZoom();
     }
     void FixedUpdate()
     {
@@ -103,11 +104,18 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(reducer.x, rb.velocity.y, reducer.z);
         input.y = 0f;
     }
+
+    public void OnIntroDone()
+    {
+        isIntroDone = true;
+        VirtualCamera.Follow = CinemachineCameraTarget.transform;
+
+    }
     private void Move()
     {
         targetSpeed = inputHandler.sprint ? sprint : speed;
         Vector3 inputDirection = new Vector3(inputHandler.move.x, 0.0f, inputHandler.move.y).normalized;
-        if (inputHandler.move != Vector2.zero && !anim.GetBool("PickUp"))
+        if (inputHandler.move != Vector2.zero && isIntroDone)
         {
             targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                               mainCamera.transform.eulerAngles.y;
@@ -143,34 +151,37 @@ public class PlayerController : MonoBehaviour
     {
         if (inputHandler.pickUp && anim.GetBool("CanPickUp"))
         {
-            pickUp.Execute(anim, inputHandler.pickUp);
+            //pickUp.Execute(anim, inputHandler.pickUp);
             //performingAnimation = true;
-            input = Vector3.zero;
+            //input = Vector3.zero;
+            anim.SetBool("PickUp", inputHandler.pickUp);
         }
-        if (inputHandler.eqSlot1)
-        {
-            eqSlot = 1;
-        }
-        else if (inputHandler.eqSlot2){
-            eqSlot = 2;
-        }else if(inputHandler.eqSlot3){
-             eqSlot = 3;
+        else
+            anim.SetBool("PickUp", inputHandler.pickUp);
+        //if (inputHandler.eqSlot1)
+        //{
+        //    eqSlot = 1;
+        //}
+        //else if (inputHandler.eqSlot2){
+        //    eqSlot = 2;
+        //}else if(inputHandler.eqSlot3){
+        //     eqSlot = 3;
 
-        }
-       // Debug.Log(eqSlot);
-       // Debug.Log(inputHandler.eqSlot1);
+        //}
+        // Debug.Log(eqSlot);
+        // Debug.Log(inputHandler.eqSlot1);
 
         //attack = inputHandler.eq;
         //  
         //if(eqTool.GetEqSlot>0)
         //eqTool = inputHandler.eqSlot;
-        if(inputHandler.mining)
+        if (inputHandler.mining && isIntroDone)
         {
             anim.SetBool("Attack",inputHandler.mining);
         }else
             anim.SetBool("Attack", inputHandler.mining);
 
-        if (inputHandler.mining || inputHandler.eqSlot1|| inputHandler.eqSlot2|| inputHandler.eqSlot3)
+        if (inputHandler.mining || inputHandler.eqSlot1|| inputHandler.eqSlot2|| inputHandler.eqSlot3 && isIntroDone)
             switch (eqSlot)
         {
             case 1:
@@ -202,7 +213,7 @@ public class PlayerController : MonoBehaviour
     }
     public void OnJump(InputValue value)
     { 
-        if (value.isPressed && Grounded)
+        if (value.isPressed && Grounded && isIntroDone)
         {
             input += Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight) * Vector3.up;
            // anim.SetBool("Jump", true);
@@ -245,7 +256,7 @@ public class PlayerController : MonoBehaviour
 
     public void CameraRotation()
     {
-        if (inputHandler.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+        if (inputHandler.look.sqrMagnitude >= _threshold && !LockCameraPosition && isIntroDone)
         {
             float deltaTimeMultiplier = 2.0f;
 
@@ -264,5 +275,23 @@ public class PlayerController : MonoBehaviour
         if (lfAngle < -360f) lfAngle += 360f;
         if (lfAngle > 360f) lfAngle -= 360f;
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
+    }
+    float cameraDistance;
+    CinemachineComponentBase componentBase;
+    public CinemachineVirtualCamera VirtualCamera;
+    private void CameraZoom()
+    {
+        if (inputHandler.zoom != 0 && isIntroDone)
+        {
+            cameraDistance = inputHandler.zoom * 0.001f;
+            if (componentBase is Cinemachine3rdPersonFollow)
+            {
+                (componentBase as Cinemachine3rdPersonFollow).CameraDistance -= cameraDistance;
+                if ((componentBase as Cinemachine3rdPersonFollow).CameraDistance < 1)
+                    (componentBase as Cinemachine3rdPersonFollow).CameraDistance = 1;
+                else if ((componentBase as Cinemachine3rdPersonFollow).CameraDistance > 10)
+                    ((componentBase as Cinemachine3rdPersonFollow).CameraDistance) = 10;
+            }
+        }
     }
 }
