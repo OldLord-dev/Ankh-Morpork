@@ -6,6 +6,8 @@ public class PlayerEventListener : MonoBehaviour
 {
     Animator anim;
     Animator animColl;
+    [SerializeField]
+    GameObject ui;
     public bool AttackInProgress { get; private set; } = false;
     [SerializeField]
     private BoxCollider boxCollider;
@@ -53,6 +55,7 @@ public class PlayerEventListener : MonoBehaviour
             coll = other;
             animColl = coll.gameObject.GetComponent<Animator>();
             anim.SetBool("CanPickUp", true);
+            ui.SetActive(true);
         }
     }
     bool state=false;
@@ -70,6 +73,7 @@ public class PlayerEventListener : MonoBehaviour
         if (other.gameObject.layer == 6)
         {
                 anim.SetBool("CanPickUp", false);
+                ui.SetActive(false);
                 coll = null;
         }
     }

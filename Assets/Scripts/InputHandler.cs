@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
         public float zoom;
         private bool cursorLocked = true;
         private bool cursorInputForLook = true;
-        public Float eqSlot;
+        //public Float eqSlot;
         public PlayerController eqTool;
         public float eq;
 		public void OnMove(InputValue value)
