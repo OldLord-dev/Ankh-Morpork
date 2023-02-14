@@ -25,7 +25,7 @@ public class SoundManager : MonoBehaviour
             {
                 song.volume = Mathf.Lerp(song.volume, 0.1f, t);
                 frog.volume = Mathf.Lerp(frog.volume, 0.1f, t);
-                t += 0.2f * Time.deltaTime;
+                t += 0.1f * Time.deltaTime;
                 if (t > 1.0f)
                 {
                     i = 0;
@@ -37,7 +37,7 @@ public class SoundManager : MonoBehaviour
             {
                 song.volume = Mathf.Lerp(song.volume, baseVolume, t);
                 frog.volume = Mathf.Lerp(frog.volume, baseVolume, t);
-                t += 0.2f * Time.deltaTime;
+                t += 0.1f * Time.deltaTime;
                 if (t > 1.0f)
                 {
                     i = 0;
@@ -51,6 +51,7 @@ public class SoundManager : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             i = 1;
+            t = 0.0f;
             playerEnter = true;
         }
 
@@ -60,6 +61,7 @@ public class SoundManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             i = 1;
+            t = 0.0f;
             playerEnter = false;  
         }
 
